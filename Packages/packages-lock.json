@@ -92,13 +92,6 @@
       },
       "hash": "90f353e4352aae4df52fa2c05e49b804631d2a63"
     },
-    "com.unity.scripting.python": {
-      "version": "5.0.0-pre.5",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
     "com.unity.services.core": {
       "version": "1.4.0",
       "depth": 1,

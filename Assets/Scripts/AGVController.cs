@@ -39,6 +39,7 @@ namespace RosSharp.Control
             SetParameters(wA2);
             ros = ROSConnection.GetOrCreateInstance();
             ros.Subscribe<TwistMsg>("cmd_vel", ReceiveROSCmd);
+            Debug.Log("AGVController:"+wA1.GetInstanceID());
         }
 
         void ReceiveROSCmd(TwistMsg cmdVel)
@@ -150,8 +151,10 @@ namespace RosSharp.Control
                 wheel1Rotation *= Mathf.Rad2Deg;
                 wheel2Rotation *= Mathf.Rad2Deg;
             }
+
             SetSpeed(wA1, wheel1Rotation);
             SetSpeed(wA2, wheel2Rotation);
+
         }
     }
 }
