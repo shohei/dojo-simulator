@@ -56,14 +56,12 @@ public class ManualMove : MonoBehaviour
         yield return new WaitForSeconds(time);
         wheel1Rotation = 0;
         wheel2Rotation = 0;
-        print("set to 0");
     }
 
     public void Forward()
     {
-        print("set to 3400");
-        wheel1Rotation = 3400;
-        wheel2Rotation = 3400;
+        wheel1Rotation = 0.99f;
+        wheel2Rotation = 0.99f;
         StartCoroutine(ExecuteAfterTime(2));
     }
 
