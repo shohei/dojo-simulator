@@ -1,7 +1,7 @@
 using UnityEngine;
-using Unity.Robotics.ROSTCPConnector;
-using RosMessageTypes.Geometry;
-using Unity.Robotics.UrdfImporter.Control;
+// using Unity.Robotics.ROSTCPConnector;
+// using RosMessageTypes.Geometry;
+// using Unity.Robotics.UrdfImporter.Control;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -28,8 +28,8 @@ namespace RosSharp.Control
         public float ROSTimeout = 0.5f;
         private float lastCmdReceived = 0f;
 
-        ROSConnection ros;
-        private RotationDirection direction;
+        // ROSConnection ros;
+        // private RotationDirection direction;
         private float rosLinear = 0f;
         private float rosAngular = 0f;
 
@@ -39,16 +39,16 @@ namespace RosSharp.Control
             wA2 = wheel2.GetComponent<ArticulationBody>();
             SetParameters(wA1);
             SetParameters(wA2);
-            ros = ROSConnection.GetOrCreateInstance();
-            ros.Subscribe<TwistMsg>("cmd_vel", ReceiveROSCmd);
+            // ros = ROSConnection.GetOrCreateInstance();
+            // ros.Subscribe<TwistMsg>("cmd_vel", ReceiveROSCmd);
         }
 
-        void ReceiveROSCmd(TwistMsg cmdVel)
-        {
-            rosLinear = (float)cmdVel.linear.x;
-            rosAngular = (float)cmdVel.angular.z;
-            lastCmdReceived = Time.time;
-        }
+        // void ReceiveROSCmd(TwistMsg cmdVel)
+        // {
+        //     rosLinear = (float)cmdVel.linear.x;
+        //     rosAngular = (float)cmdVel.angular.z;
+        //     lastCmdReceived = Time.time;
+        // }
 
         private float wheel1Rotation = 0;
         private float wheel2Rotation = 0;
@@ -96,7 +96,7 @@ namespace RosSharp.Control
             }
             else if (mode == ControlMode.ROS)
             {
-                ROSUpdate();
+                // ROSUpdate();
             }     
             else if (mode == ControlMode.Manual)
             {
@@ -117,7 +117,7 @@ namespace RosSharp.Control
             ArticulationDrive drive = joint.xDrive;
             if (float.IsNaN(wheelSpeed))
             {
-                drive.targetVelocity = ((2 * maxLinearSpeed) / wheelRadius) * Mathf.Rad2Deg * (int)direction;
+                // drive.targetVelocity = ((2 * maxLinearSpeed) / wheelRadius) * Mathf.Rad2Deg * (int)direction;
             }
             else
             {
@@ -161,15 +161,15 @@ namespace RosSharp.Control
         }
 
 
-        private void ROSUpdate()
-        {
-            if (Time.time - lastCmdReceived > ROSTimeout)
-            {
-                rosLinear = 0f;
-                rosAngular = 0f;
-            }
-            RobotInput(rosLinear, -rosAngular);
-        }
+        // private void ROSUpdate()
+        // {
+        //     if (Time.time - lastCmdReceived > ROSTimeout)
+        //     {
+        //         rosLinear = 0f;
+        //         rosAngular = 0f;
+        //     }
+        //     RobotInput(rosLinear, -rosAngular);
+        // }
 
         private void RobotInput(float speed, float rotSpeed) // m/s and rad/s
         {
