@@ -73,8 +73,8 @@ namespace RosSharp.Control
             StartCoroutine(ExecuteAfterTime(1));
         }
         public void Right(){
-            wheel1Rotation = -500f;
-            wheel2Rotation = 500f;
+            wheel1Rotation = 500f;
+            wheel2Rotation = -500f;
             StartCoroutine(ExecuteAfterTime(0.2f));
         }
 
