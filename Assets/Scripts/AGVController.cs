@@ -2,10 +2,12 @@ using UnityEngine;
 using Unity.Robotics.ROSTCPConnector;
 using RosMessageTypes.Geometry;
 using Unity.Robotics.UrdfImporter.Control;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace RosSharp.Control
 {
-    public enum ControlMode { Keyboard, ROS};
+    public enum ControlMode { Keyboard, ROS, Manual};
 
     public class AGVController : MonoBehaviour
     {
@@ -39,7 +41,6 @@ namespace RosSharp.Control
             SetParameters(wA2);
             ros = ROSConnection.GetOrCreateInstance();
             ros.Subscribe<TwistMsg>("cmd_vel", ReceiveROSCmd);
-            Debug.Log("AGVController:"+wA1.GetInstanceID());
         }
 
         void ReceiveROSCmd(TwistMsg cmdVel)
@@ -49,6 +50,44 @@ namespace RosSharp.Control
             lastCmdReceived = Time.time;
         }
 
+        private float wheel1Rotation = 0;
+        private float wheel2Rotation = 0;
+        // Update is called once per frame
+        private float prev_wheel1Rotation = 0;
+        IEnumerator ExecuteAfterTime(float time)
+        {
+            yield return new WaitForSeconds(time);
+            wheel1Rotation = 0;
+            wheel2Rotation = 0;
+        }
+
+        public void Forward(){
+            wheel1Rotation = 2000f;
+            wheel2Rotation = 2000f;
+            StartCoroutine(ExecuteAfterTime(1));
+        }
+
+        public void Backward(){
+            wheel1Rotation = -2000f;
+            wheel2Rotation = -2000f;
+            StartCoroutine(ExecuteAfterTime(1));
+        }
+        public void Right(){
+            wheel1Rotation = -500f;
+            wheel2Rotation = 500f;
+            StartCoroutine(ExecuteAfterTime(0.2f));
+        }
+
+        public void Left(){
+            wheel1Rotation = -500f;
+            wheel2Rotation = 500f;
+            StartCoroutine(ExecuteAfterTime(0.2f));
+        }
+
+        void ManualUpdate(){
+            SetSpeed(wA1, wheel1Rotation);
+            SetSpeed(wA2, wheel2Rotation);
+        }
         void FixedUpdate()
         {
             if (mode == ControlMode.Keyboard)
@@ -59,6 +98,10 @@ namespace RosSharp.Control
             {
                 ROSUpdate();
             }     
+            else if (mode == ControlMode.Manual)
+            {
+                ManualUpdate();
+            }
         }
 
         private void SetParameters(ArticulationBody joint)
