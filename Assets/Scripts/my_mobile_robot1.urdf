@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<robot name="my_mobile_robot">
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="0.3 0.3 0.23" />
+            </geometry>
+            <material name="white">
+                <color rgba="1.0 1.0 1.0 1.0" />
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.3 0.3 0.23" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="1.0" />
+            <inertia ixx="0.01191" iyy="0.01191" izz="0.01500" ixy="0" iyz="0" ixz="0" />
+        </inertial>
+    </link>
+    <joint name="left_wheel_joint" type="continuous">
+        <axis xyz="0 0 1" />
+        <parent link="base_link" />
+        <child link="left_wheel" />
+        <origin rpy="-1.5708 0 0" xyz="0.0 0.125 -.09" />
+    </joint>
+    <link name="left_wheel">
+        <visual>
+            <geometry>
+                <cylinder length="0.05" radius="0.035" />
+            </geometry>
+            <material name="gray">
+                <color rgba="0.2 0.2 0.2 1" />
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.05" radius="0.035" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.1" />
+            <inertia ixx="0.00005" iyy="0.00005" izz="0.00006" ixy="0" ixz="0" iyz="0" />
+        </inertial>
+    </link>
+    <joint name="right_wheel_joint" type="continuous">
+        <axis xyz="0 0 1" />
+        <parent link="base_link" />
+        <child link="right_wheel" />
+        <origin rpy="-1.5708 0 0" xyz="0.0 -0.125 -.09" />
+    </joint>
+    <link name="right_wheel">
+        <visual>
+            <geometry>
+                <cylinder length="0.05" radius="0.035" />
+            </geometry>
+            <material name="gray">
+                <color rgba="0.2 0.2 0.2 1" />
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.05" radius="0.035" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.1" />
+            <inertia ixx="0.00005" iyy="0.00005" izz="0.00006" ixy="0" ixz="0" iyz="0" />
+        </inertial>
+    </link>
+    <joint name="scan_joint" type="fixed">
+        <axis xyz="0 1 0" />
+        <origin xyz="0 0 0.2" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="base_scan" />
+    </joint>
+    <link name="base_scan">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box size="0.1 0.1 0.1" />
+            </geometry>
+            <material name="red">
+                <color rgba="1 0 0 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box size="0.1 0.1 0.1" />
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.1" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.00017" iyy="0.00017" izz="0.00017" ixy="0" ixz="0" iyz="0" />
+        </inertial>
+    </link>
+    <link name="base_footprint" />
+    <joint name="base_joint" type="fixed">
+        <origin xyz="0 0 0.126" />
+        <parent link="base_footprint" />
+        <child link="base_link" />
+    </joint>
+
+</robot>
